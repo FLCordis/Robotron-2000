@@ -1,6 +1,10 @@
 const controle = document.querySelectorAll("[data-controle]");
 const estatisticas = document.querySelectorAll("[data-estatistica]")
 
+const robotron = document.querySelector("[data-robotroncolor]");
+let coresRobotron = ['Amarelo', 'Vermelho', 'Branco', 'Azul', 'Preto', 'Rosa'];
+let count = 0;
+
 const pecas = {
     "bracos": {
         "forca": 29,
@@ -35,12 +39,19 @@ const pecas = {
     }
 }
 
+robotron.addEventListener("click", (e) => {
+    trocaImagem();
+    console.log(robotron);
+})
+
+
 controle.forEach( (elemento) => {
     elemento.addEventListener("click", (evento) => {
         manipulaDados(evento.target.dataset.controle, evento.target.parentNode);
         atualizaEstatisticas(evento.target.dataset.peca);
     })
 })
+
 
 function manipulaDados(operacao, controle){
     const peca = controle.querySelector("[data-contador]")
@@ -56,4 +67,14 @@ function atualizaEstatisticas(peca){
     estatisticas.forEach( (elemento) => {
         elemento.textContent = parseInt(elemento.textContent) + pecas[peca][elemento.dataset.estatistica]
     })
+}
+
+function trocaImagem(){
+    if (count >= coresRobotron.length) {
+        count = 0;
+    }
+    robotron.setAttribute('src', `img/Robotron 2000 - ${coresRobotron[count]}.png`);
+    count ++;
+
+    
 }
